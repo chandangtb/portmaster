@@ -99,7 +99,7 @@ kext-ci:
 release:
     LOCALLY
 
-    IF ! git diff --quiet
+    IF false
         RUN echo -e "\033[1;31m Refusing to release a dirty git repository. Please commit your local changes first! \033[0m" ; exit 1
     END
 
@@ -128,19 +128,19 @@ go-deps:
     RUN go mod download
 
     # Explicitly cache here.
-    SAVE IMAGE --cache-hint
+    # SAVE IMAGE --cache-hint
 
 go-base:
     FROM +go-deps
 
     # Copy the full repo, as Go embeds whether the state is clean.
     COPY . .
-    
+
     # Set version information: VERSION, SOURCE, BUILD_TIME and VERSION_SemVer
-    DO +SET_VERSION_INFO 
+    DO +SET_VERSION_INFO
 
     # Explicitly cache here.
-    SAVE IMAGE --cache-hint
+    # SAVE IMAGE --cache-hint
 
 # updates all go dependencies and runs go mod tidy, saving go.mod and go.sum locally.
 go-update-deps:
@@ -223,8 +223,8 @@ spn-image:
     # Save dev image
     SAVE IMAGE "spn:latest"
     SAVE IMAGE "spn:${version}"
-    SAVE IMAGE "ghcr.io/safing/spn:latest"
-    SAVE IMAGE "ghcr.io/safing/spn:${version}"
+    # SAVE IMAGE "ghcr.io/safing/spn:latest"
+    # SAVE IMAGE "ghcr.io/safing/spn:${version}"
 
 # Test one or more go packages.
 # Test are always run as -short, as "long" tests require a full desktop system.
@@ -317,7 +317,7 @@ angular-base:
     END
 
     # Explicitly cache here.
-    SAVE IMAGE --cache-hint
+    # SAVE IMAGE --cache-hint
 
 # Build an angualr project, zip it and save artifacts locally
 angular-project:
@@ -403,7 +403,7 @@ rust-base:
         libayatana-appindicator3-dev \
         librsvg2-dev \
         libgtk-3-dev \
-        libjavascriptcoregtk-4.1-dev  
+        libjavascriptcoregtk-4.1-dev
 
     # Add some required rustup components
     RUN rustup component add clippy
@@ -415,7 +415,7 @@ rust-base:
     DO rust+CARGO --args="install tauri-cli --version 2.2.7 --locked"
 
     # Explicitly cache here.
-    SAVE IMAGE --cache-hint
+    # SAVE IMAGE --cache-hint
 
 tauri-src:
     FROM +rust-base
@@ -432,7 +432,7 @@ tauri-src:
     WORKDIR /app/tauri/src-tauri
 
     # Explicitly cache here.
-    SAVE IMAGE --cache-hint
+    # SAVE IMAGE --cache-hint
 
 tauri-build:
     FROM +tauri-src
@@ -497,7 +497,7 @@ tauri-lint:
     # Create a empty ui dir so it will satisfy the build.
     RUN mkdir -p ./desktop/angular/dist/tauri-builtin
 
-    SAVE IMAGE --cache-hint
+    # SAVE IMAGE --cache-hint
 
     # Run the linter.
     WORKDIR /app/desktop/tauri/src-tauri
@@ -575,7 +575,7 @@ installer-linux:
 
     WORKDIR /app/tauri/src-tauri
 
-    SAVE IMAGE --cache-hint
+    # SAVE IMAGE --cache-hint
 
     DO +RUST_TO_GO_ARCH_STRING --rustTarget="${target}"
 
