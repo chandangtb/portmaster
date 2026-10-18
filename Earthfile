@@ -223,13 +223,13 @@ spn-image:
     # Save dev image
     SAVE IMAGE "spn:latest"
     SAVE IMAGE "spn:${version}"
-<<<<<<< HEAD
+
     # SAVE IMAGE "ghcr.io/safing/spn:latest"
     # SAVE IMAGE "ghcr.io/safing/spn:${version}"
-=======
+
     SAVE IMAGE "ghcr.io/chandangtb/spn:latest"
     SAVE IMAGE "ghcr.io/chandangtb/spn:${version}"
->>>>>>> 9815eba460d572073bba24db7f7ba69e735880d9
+
 
 # Test one or more go packages.
 # Test are always run as -short, as "long" tests require a full desktop system.
