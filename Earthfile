@@ -193,7 +193,7 @@ go-build:
             ENV EXTRA_LD_FLAGS = ""
         END
 
-        RUN --no-cache go build -ldflags="${EXTRA_LD_FLAGS} -X github.com/safing/portmaster/base/info.version=${VERSION} -X github.com/safing/portmaster/base/info.buildSource=${SOURCE} -X github.com/safing/portmaster/base/info.buildTime=${BUILD_TIME}" -o "/tmp/build/" ./cmds/${bin}
+        RUN --no-cache go build -ldflags="${EXTRA_LD_FLAGS} -X github.com/chandangtb/portmaster/base/info.version=${VERSION} -X github.com/chandangtb/portmaster/base/info.buildSource=${SOURCE} -X github.com/chandangtb/portmaster/base/info.buildTime=${BUILD_TIME}" -o "/tmp/build/" ./cmds/${bin}
     END
 
     DO +GO_ARCH_STRING --goos="${GOOS}" --goarch="${GOARCH}" --goarm="${GOARM}"
@@ -223,8 +223,8 @@ spn-image:
     # Save dev image
     SAVE IMAGE "spn:latest"
     SAVE IMAGE "spn:${version}"
-    SAVE IMAGE "ghcr.io/safing/spn:latest"
-    SAVE IMAGE "ghcr.io/safing/spn:${version}"
+    SAVE IMAGE "ghcr.io/chandangtb/spn:latest"
+    SAVE IMAGE "ghcr.io/chandangtb/spn:${version}"
 
 # Test one or more go packages.
 # Test are always run as -short, as "long" tests require a full desktop system.
